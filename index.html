@@ -38,7 +38,11 @@
             position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid var(--soft-border);
         }
         .logo-wrap { display: flex; align-items: center; text-decoration: none; color: var(--brand-navy); gap: 10px; z-index: 1001; }
-        .logo-icon { width: 38px; height: 38px; background: var(--brand-navy); display: flex; align-items: center; justify-content: center; color: var(--brand-teal); font-weight: 900; border-radius: 10px; transition: var(--transition); }
+        .logo-icon { width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; background: transparent; transition: var(--transition); }
+        .logo-icon img { width: 100%; height: 100%; display: block; object-fit: contain; }
+        .logo-text img { display: block; height: 28px; max-width: 220px; object-fit: contain; }
+        .logo-small { width: 40px; height: 40px; }
+        .footer-logo-wrap .logo-text img { height: 22px; }
         
         .nav-links { display: flex; align-items: center; gap: 30px; }
         .nav-links a { text-decoration: none; color: var(--brand-navy); font-weight: 600; font-size: 0.9rem; transition: var(--transition); }
@@ -148,6 +152,25 @@
         .wa-float { background: #25D366; color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3); transition: var(--transition); text-decoration: none; }
         .wa-label { background: white; padding: 10px 18px; border-radius: 50px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid var(--soft-border); color: var(--brand-navy); }
 
+        /* WhatsApp Popup */
+        .wa-popup {
+            position: fixed; bottom: 100px; right: 30px; width: 320px; max-width: calc(100% - 60px); background: var(--white); border-radius: 16px; box-shadow: 0 30px 60px rgba(10,15,26,0.12); border: 1px solid var(--soft-border); overflow: hidden; transform: translateY(10px) scale(.98); opacity: 0; visibility: hidden; transition: var(--transition); z-index: 2001;
+        }
+        .wa-popup.open { transform: translateY(0) scale(1); opacity: 1; visibility: visible; }
+        .wa-popup-header { display:flex; align-items:center; justify-content:space-between; padding: 14px 16px; border-bottom: 1px solid var(--soft-border); }
+        .wa-agent { display:flex; gap:12px; align-items:center; }
+        .wa-agent i { background: #25D366; color: white; width:44px; height:44px; border-radius: 10px; display:flex; align-items:center; justify-content:center; font-size:20px; }
+        .wa-agent-info strong { display:block; font-size:0.95rem; }
+        .wa-agent-info span { display:block; font-size:0.8rem; color:var(--text-gray); }
+        .wa-close { background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-gray); }
+        .wa-popup-body { padding: 12px 14px 16px; display:flex; flex-direction:column; gap:10px; }
+        .wa-quick { display:flex; gap:8px; flex-wrap:wrap; }
+        .wa-quick-btn { background:#f4f7f6; border:1px solid var(--soft-border); padding:8px 10px; border-radius:999px; font-size:0.85rem; cursor:pointer; color:var(--brand-navy); }
+        .wa-quick-btn:hover { background:var(--brand-teal); color:white; border-color:var(--brand-teal); }
+        .wa-popup textarea { width:100%; padding:10px; border:1px solid var(--soft-border); border-radius:8px; font-family:inherit; resize:vertical; min-height:54px; }
+        .wa-actions { display:flex; justify-content:flex-end; }
+        .wa-float.active { transform: scale(0.98) rotate(10deg); box-shadow: 0 20px 40px rgba(37,211,102,0.25); }
+
         .social-stack { position: fixed; bottom: 30px; left: 30px; z-index: 2000; display: flex; flex-direction: column; gap: 12px; }
         .social-popup { 
             width: 45px; height: 45px; background: white; border-radius: 50%; 
@@ -155,6 +178,17 @@
             text-decoration: none; border: 1px solid var(--soft-border); box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: var(--transition);
         }
         .social-popup:hover { background: var(--brand-navy); color: var(--brand-teal); transform: translateX(8px); }
+
+        @media (max-width: 480px) {
+            .wa-popup { right: 16px; left: 16px; bottom: 80px; width: auto; }
+
+            /* Mobile: show only icon in navbar/footer and increase touch target for iPhone */
+            .logo-text { display: none !important; }
+            .footer-logo-wrap .logo-text { display: none !important; }
+            .logo-icon, .footer-logo-wrap .logo-icon { width: 44px; height: 44px; }
+            .logo-wrap { padding: 6px; border-radius: 8px; }
+            .logo-icon img { width: 100%; height: 100%; }
+        }
 
         /* --- MOBILE RESPONSIVE LOGIC --- */
         @media (max-width: 992px) {
@@ -178,6 +212,7 @@
             .section { padding: 60px 6%; }
             .hero { padding-top: 130px; }
             .wa-label, .social-stack { display: none; }
+            .logo-text img { height: 20px; max-width: 160px; }
             .testimonial-section { margin: 0; border-radius: 0; }
         }
     </style>
@@ -185,9 +220,9 @@
 <body>
 
     <nav>
-        <a href="#" class="logo-wrap">
-            <div class="logo-icon">E</div>
-            <div style="font-family:'Outfit'; font-weight:700; font-size:1.4rem;">EnThirio</div>
+        <a href="#" class="logo-wrap" aria-label="EnThirio home">
+            <div class="logo-icon"><img src="../icon.svg" alt="EnThirio logo"></div>
+            <div class="logo-text"><img src="../text.svg" alt="EnThirio wordmark"></div>
         </a>
         <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
             <span></span><span></span><span></span>
@@ -405,9 +440,9 @@
     <footer class="main-footer">
         <div class="footer-grid">
             <div class="footer-col">
-                <a href="#" class="footer-logo-wrap">
-                    <div class="logo-icon" style="width: 32px; height: 32px; font-size: 1rem;">E</div>
-                    <div style="font-family:'Outfit'; font-weight:700; font-size:1.3rem;">EnThirio</div>
+                <a href="#" class="footer-logo-wrap logo-wrap" aria-label="EnThirio home">
+                    <div class="logo-icon logo-small"><img src="../icon.svg" alt="EnThirio logo"></div>
+                    <div class="logo-text"><img src="../text.svg" alt="EnThirio wordmark"></div>
                 </a>
                 <p style="color: var(--text-gray); font-size: 0.95rem;">Transforming attention into revenue through precision media buying and strategy.</p>
             </div>
@@ -436,14 +471,35 @@
     </footer>
 
     <div class="social-stack">
-        <a href="#" class="social-popup"><i class="fa-brands fa-linkedin-in"></i></a>
-        <a href="#" class="social-popup"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" class="social-popup"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="mailto:enthiriogroup@gmail.com" class="social-popup"><i class="fa fa-envelope"></i></a>
+        <a href="https://www.instagram.com/p/DQ3-xPQEaZb/?igsh=MXF4NW40c21vbTlsYw==" class="social-popup"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.facebook.com/people/Enthirio/61583064904939/" class="social-popup"><i class="fa-brands fa-facebook"></i></a>
     </div>
 
     <div class="floating-container-right">
-        <div class="wa-label">Expert Chat</div>
-        <a href="#" class="wa-float"><i class="fa-brands fa-whatsapp"></i></a>
+        <div class="wa-label" id="waLabel">Expert Chat</div>
+        <a href="#" class="wa-float" id="waFloat" data-number="918882370281"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+
+    <div class="wa-popup" id="waPopup" aria-hidden="true" role="dialog" aria-labelledby="waTitle">
+        <div class="wa-popup-header">
+            <div class="wa-agent">
+                <i class="fa-brands fa-whatsapp"></i>
+                <div class="wa-agent-info"><strong id="waTitle">Expert Chat</strong><span>Typically replies within 1 hour</span></div>
+            </div>
+            <button class="wa-close" id="waClose" aria-label="Close chat">&times;</button>
+        </div>
+        <div class="wa-popup-body">
+            <div class="wa-quick">
+                <button type="button" class="wa-quick-btn">I'd like a free audit</button>
+                <button type="button" class="wa-quick-btn">Tell me pricing</button>
+                <button type="button" class="wa-quick-btn">How to start?</button>
+            </div>
+            <textarea id="waMessage">Hi, I'm interested in a free ad audit — can we discuss?</textarea>
+            <div class="wa-actions">
+                <button id="waSend" class="cta-metallic" style="padding: 10px 18px; font-size: 0.9rem;">Start Chat</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -469,6 +525,54 @@
             index = (index + 1) % 2;
             if(track) track.style.transform = `translateX(-${index * 100}%)`;
         }, 5000);
+
+        // --- WhatsApp popup interactions ---
+        const waFloatEl = document.getElementById('waFloat');
+        const waLabel = document.getElementById('waLabel');
+        const waPopup = document.getElementById('waPopup');
+        const waClose = document.getElementById('waClose');
+        const waMessage = document.getElementById('waMessage');
+        const waSend = document.getElementById('waSend');
+        const waQuickButtons = document.querySelectorAll('.wa-quick-btn');
+        const waNumber = waFloatEl ? waFloatEl.dataset.number : '918882370281';
+
+        function openWaPopup() {
+            if(!waPopup) return;
+            waPopup.classList.add('open');
+            waPopup.setAttribute('aria-hidden','false');
+            if(waFloatEl) waFloatEl.classList.add('active');
+            setTimeout(() => { if(waMessage) waMessage.focus(); }, 200);
+        }
+
+        function closeWaPopup() {
+            if(!waPopup) return;
+            waPopup.classList.remove('open');
+            waPopup.setAttribute('aria-hidden','true');
+            if(waFloatEl) waFloatEl.classList.remove('active');
+        }
+
+        if (waFloatEl) {
+            waFloatEl.addEventListener('click', (e) => { e.preventDefault(); if (waPopup && waPopup.classList.contains('open')) closeWaPopup(); else openWaPopup(); });
+        }
+        if (waLabel) waLabel.addEventListener('click', (e) => { e.preventDefault(); openWaPopup(); });
+        if (waClose) waClose.addEventListener('click', closeWaPopup);
+
+        document.addEventListener('click', (e) => {
+            if (!waPopup) return;
+            if (waPopup.classList.contains('open') && !waPopup.contains(e.target) && !waFloatEl.contains(e.target) && !waLabel.contains(e.target)) {
+                closeWaPopup();
+            }
+        });
+
+        waQuickButtons.forEach(btn => btn.addEventListener('click', () => { if(waMessage) { waMessage.value = btn.textContent; waMessage.focus(); } }));
+
+        if (waSend) waSend.addEventListener('click', () => {
+            const text = encodeURIComponent((waMessage && waMessage.value.trim()) || 'Hi, I am interested in your services');
+            const url = `https://wa.me/${waNumber}?text=${text}`;
+            window.open(url, '_blank');
+        });
+
+        if (waMessage) waMessage.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (waSend) waSend.click(); } });
     </script>
 </body>
 </html>
