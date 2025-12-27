@@ -189,6 +189,82 @@
             text-decoration: none; border: 1px solid var(--soft-border); box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: var(--transition);
         }
         .social-popup:hover { background: var(--brand-navy); color: var(--brand-teal); transform: translateX(8px); }
+/* ---------- TOP CONTACT BAR (REFINED + MOBILE VISIBLE) ---------- */
+.top-contact-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    min-height: 36px;
+    z-index: 1200;
+    background: #ffffff;
+    border-bottom: 1px solid var(--soft-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 8%;
+    font-size: 0.78rem;
+}
+
+.top-contact-left,
+.top-contact-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    color: #0a0f1a;
+}
+
+.top-contact-bar a {
+    color: #0a0f1a;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.top-contact-bar i {
+    color: #29d1c1;
+    font-size: 0.75rem;
+    margin-right: 6px;
+}
+
+/* right text subtle */
+.top-contact-right {
+    opacity: 0.55;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* push nav down */
+nav {
+    top: 36px;
+}
+
+/* ---------- MOBILE REFINEMENT ---------- */
+@media (max-width: 768px) {
+    .top-contact-bar {
+        padding: 6px 6%;
+        font-size: 0.72rem;
+        justify-content: center;
+    }
+    .top-contact-bar {
+    padding-top: calc(6px + env(safe-area-inset-top));
+}
+    .top-contact-right {
+        display: none;
+    }
+
+    .top-contact-left {
+        gap: 14px;
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+    }
+
+    nav {
+        top: 42px;
+    }
+}
+
+
+
 
         @media (max-width: 480px) {
             .wa-popup { right: 16px; left: 16px; bottom: 80px; width: auto; }
@@ -229,6 +305,23 @@
     </style>
 </head>
 <body>
+<!-- Top Contact Bar -->
+<div class="top-contact-bar">
+    <div class="top-contact-left">
+        <span>
+            <i class="fa-solid fa-envelope"></i>
+            <a href="mailto:enthiriogroup@gmail.com">enthiriogroup@gmail.com</a>
+        </span>
+        <span>
+            <i class="fa-solid fa-phone"></i>
+            <a href="tel:+918882370281">+91 88823 70281</a>
+        </span>
+    </div>
+    <div class="top-contact-right">
+        <span>Performance-Driven Media Buying</span>
+    </div>
+</div>
+
 
     <nav>
         <a href="#" class="logo-wrap" aria-label="EnThirio home">
